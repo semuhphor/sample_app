@@ -89,6 +89,6 @@ PLATFORMS
 
 DEPENDENCIES
   rails (= 3.0.1)
-  rspec (= 2.0.0beta18)
-  rspec-rails (= 2.0.0beta18)
+  rspec (= 2.0.0.beta.18)
+  rspec-rails (= 2.0.0.beta.18)
   sqlite3-ruby (= 1.2.5)
