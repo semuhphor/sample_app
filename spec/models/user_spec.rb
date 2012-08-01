@@ -3,7 +3,11 @@ require 'spec_helper'
 describe User do
 
   before(:each) do
-  	@attr = { :name => 'example user', :email => 'example@gmail.com' }
+  	@attr = { 
+  	  :name => 'example user', 
+  	  :email => 'example@gmail.com',
+  	  :password => "foobar",
+  	  :password_confirmation => "foobar" }
   end
   
   
@@ -56,6 +60,35 @@ describe User do
   	user_with_duplicate_email_address.should_not be_valid
   end
   
+  describe "passwords" do
+  
+    before(:each) do
+      @user = User.new(@attr)
+    end
+  
+    it "should have a password attribute" do
+      @user.should respond_to(:password)
+    end
+    
+    it "should have a password confirmation attribute" do
+      @user.should respond_to(:password_confirmation)
+    end
+        
+  end
+  
+  describe "password validates" do
+  
+    it "should require a password" do
+      User.new(@attr.merge(:password => "", :password_confirmation => ""))
+        .should_not be_valid
+    end
+    
+    it "should require a matching password confirmation" do
+      User.new(@attr.merge(:password_confirmation => "badConfirmation"))
+        .should_not be_valid
+    end
+    
+  end
 end
 
 # == Schema Information
