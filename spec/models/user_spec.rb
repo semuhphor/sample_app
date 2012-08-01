@@ -88,17 +88,42 @@ describe User do
         .should_not be_valid
     end
     
+    it "should reject short passwords" do
+      short = "a" * 5
+      User.new(@attr.merge(:password => short, :password_confirmation => short))
+        .should_not be_valid
+    end
+    
+    it "should reject long passwords" do
+      long = "a" * 41
+      User.new(@attr.merge(:password => long, :password_confirmation => long))
+        .should_not be_valid
+    end
+    
   end
+  
+  describe "password encryption" do
+  
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+    
+    it "should have an encrypted password attribute" do
+      @user.should respond_to(:encrypted_password)
+    end
+  end  
 end
+
 
 # == Schema Information
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                 :integer         not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  encrypted_password :string(255)
 #
 
