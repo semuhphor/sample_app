@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
 	 
 	before_save :encrypt_password
 	
+  def has_password?(submitted_password)
+    self.encrypted_password == encrypt(submitted_password)
+  end
+  
 	private
 	
 	  def encrypt_password
